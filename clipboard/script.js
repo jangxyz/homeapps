@@ -45,21 +45,21 @@
     }
     // no async clipboard api
 
-    console.log(5);
-    let $textarea = document.querySelector('#clipboard-textarea');
-    console.log(6, $textarea);
-    if (!$textarea) {
-      $textarea = document.createElement('textarea');
-      $textarea.setAttribute('id', 'clipboard-textarea');
-      document.documentElement.appendChild($textarea);
-    }
-    $textarea.focus();
-    $textarea.select();
-    console.log(7);
-    document.execCommand('paste');
-    console.log(8, $textarea.textContent);
+    //console.log(5);
+    //let $textarea = document.querySelector('#clipboard-textarea');
+    //console.log(6, $textarea);
+    //if (!$textarea) {
+    //  $textarea = document.createElement('textarea');
+    //  $textarea.setAttribute('id', 'clipboard-textarea');
+    //  document.documentElement.appendChild($textarea);
+    //}
+    //$textarea.focus();
+    //$textarea.select();
+    //console.log(7);
+    //document.execCommand('paste');
+    //console.log(8, $textarea.textContent);
 
-    return Promise.resolve($textarea.textContent);
+    //return Promise.resolve($textarea.textContent);
 
     // fallback
     return Promise.resolve('');
@@ -83,6 +83,16 @@
       // side-effects
       computeOutput();
     }
+
+    //
+    (() => {
+      if (window.navigator.clipboard) {
+        const $pasteButton = document.querySelector('button[name="paste-input-from-clipboard"]');
+        if ($pasteButton) {
+          $pasteButton.removeAttribute('disabled');
+        }
+      }
+    })();
 
     // click!summary: clipboard => .clipboard-content
     (() => {
@@ -119,13 +129,16 @@
       });
     })();
 
-    //
+    // change|paste!input: => update input
     (() => {
       const $userInput = $getInput();
       $userInput.addEventListener('change', (ev) => {
+        console.log('chnage', ev.target.value);
         updateInput(ev.target.value);
       });
       $userInput.addEventListener('paste', (ev) => {
+        ev.preventDefault();
+        console.log('paste', ev.clipboardData.getData('text'));
         updateInput(ev.clipboardData.getData('text'));
       });
     })();
@@ -164,6 +177,7 @@
       return;
     }
 
+    const $outputSection = document.querySelector('.output-section');
     const $outputTextarea = document.querySelector('[name="output-textarea"]');
     const $outputAnchor = document.querySelector('a.output-anchor');
     try {
@@ -177,6 +191,7 @@
       const output = runner(input);
       console.log(output);
 
+      $outputSection.classList.add('is-computed');
       $outputTextarea.value = output;
       $outputAnchor.setAttribute('href', output);
       if (outputAnchorText) {

@@ -3,6 +3,7 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  color: #333;
 }
 main {
   width: 100%;
@@ -118,7 +119,8 @@ fieldset.code-fieldset textarea[name="code"] {
   font-size: 120%;
 }
 
-.output-fieldset a.output-anchor {
+.output-section .output-anchor-row a.output-anchor {
+  display: inline-block;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow-x: hidden;
@@ -126,12 +128,21 @@ fieldset.code-fieldset textarea[name="code"] {
   padding: 10px 0;
   box-sizing: border-box;
   /*border: 1px solid #333;*/
+  vertical-align: middle;
 }
+.output-section .output-anchor-row .support-text {
+  font-size: 83%;
+  color: #333;
+  text-decoration: none;
+  visibility: hidden;
+  vertical-align: middle;
+}
+.output-section.is-computed .output-anchor-row .support-text {
+  visibility: visible;
+}
+
 .output-fieldset textarea {
   white-space: pre-wrap;
   overflow: auto;
-}
-.output-section a.output-anchor {
-  display: inline-block;
 }
 

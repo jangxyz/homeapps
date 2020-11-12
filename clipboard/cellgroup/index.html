@@ -42,11 +42,11 @@
       </details>
       -->
       <div class="input-row">
-        <button name="paste-input-from-clipboard">클립보드</button>
+        <button name="paste-input-from-clipboard" disabled>클립보드</button>
       </div>
 
       <div class="input-row">
-        <textarea type="text" name="user-input"></textarea>
+        <textarea type="text" name="user-input" placeholder="여기에 주소를 붙여넣기 하세요"></textarea>
       </div>
     </fieldset>
   </section>
@@ -77,12 +77,11 @@
   <section class="output-section">
     <h4>변환</h4>
     <fieldset class="output-fieldset">
-      <div class="status">
-
-      </div>
+      <div class="status"></div>
       <textarea name="output-textarea" wrap="soft"></textarea>
-      <div>
+      <div class="output-anchor-row">
         <a class="output-anchor" href="" target="_blank"></a>
+        <span class="support-text">&lt;-- 여기를 클릭하세요!</span>
       </div>
       <!--
       <div>
