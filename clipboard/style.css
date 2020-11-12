@@ -22,6 +22,9 @@ fieldset + fieldset {
 section {
   width: 100%;
 }
+details, summary {
+  width: 100%;
+}
 
 
 h4 {

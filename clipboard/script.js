@@ -85,20 +85,28 @@
   }
 
   function computeOutput({ code, input, output_anchor_text }) {
+    if (!input) {
+      return;
+    }
+
     const $outputTextarea = document.querySelector('[name="output-textarea"]');
     const $outputAnchor = document.querySelector('a.output-anchor');
     try {
-      function compute(body, input) {
+      function buildFunction(body, input) {
         return new Function(`"use strict"; return (input) => ${body}`)();
       }
-      const output = compute(code)(input);
+      const runner = buildFunction(code);
+      console.log(runner);
+
+      const output = runner(input);
       console.log(output);
+
       $outputTextarea.value = output;
       $outputAnchor.setAttribute('href', output);
       if (output_anchor_text) {
-        $outputAnchor.textContent = output_anchor_text;
+        $outputAnchor.textContent = output_anchor_text || '';
       } else {
-        $outputAnchor.textContent = output;
+        $outputAnchor.textContent = output || '';
       }
     } catch (err) {
       console.error(err);
