@@ -45,15 +45,23 @@
     }
     // no async clipboard api
 
-    //console.log(5);
-    //const $textarea = document.createElement('textarea');
-    //document.documentElement.appendChild($textarea);
-    //$textarea.focus();
-    //document.execCommand('paste');
-    //console.log(6, $textarea.textContent);
+    console.log(5);
+    let $textarea = document.querySelector('#clipboard-textarea');
+    console.log(6, $textarea);
+    if (!$textarea) {
+      $textarea = document.createElement('textarea');
+      $textarea.setAttribute('id', 'clipboard-textarea');
+      document.documentElement.appendChild($textarea);
+    }
+    $textarea.focus();
+    $textarea.select();
+    console.log(7);
+    document.execCommand('paste');
+    console.log(8, $textarea.textContent);
 
-    //return Promise.resolve($textarea.textContent);
+    return Promise.resolve($textarea.textContent);
 
+    // fallback
     return Promise.resolve('');
   }
 
