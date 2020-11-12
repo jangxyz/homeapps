@@ -9,17 +9,25 @@
     //
     const $summary = document.querySelector('summary[name="clipboard-summary"]');
     $summary.addEventListener('click', (ev) => {
+      console.log(1, 'reading from clipboard..');
       window.navigator.clipboard.readText().then((content) => {
+        console.log(3, 'read:', content);
         document.querySelector('.clipboard-content').textContent = content;
+      }).catch((err) => {
+        console.log(4, 'error:', err);
       });
+      console.log(2, 'waiting..');
     });
     //
     const $input = document.querySelector('input[name="input"]');
     const $pasteButton = document.querySelector('button[name="paste-input-from-clipboard"]');
     $pasteButton.addEventListener('click', (ev) => {
+      console.log(1, 'reading from clipboard..');
       window.navigator.clipboard.readText().then((content) => {
+        console.log(3, 'read:', content);
         $input.value = content;
       });
+      console.log(2, 'waiting..');
     });
   }
 
@@ -47,6 +55,8 @@
 
     // print permission
     //queryPermission();
+    // doesn't support iOS Safari as of 14.
+    // check https://caniuse.com/?search=permissions%20api
 
     //
     if ($input && input) {
