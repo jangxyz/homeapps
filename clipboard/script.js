@@ -4,7 +4,6 @@
   const data = {
     input: undefined,
     code: undefined,
-    clipboardContent: undefined,
     options: {},
   };
 
@@ -32,14 +31,9 @@
   }
 
   function readFromClipboard() {
-    if (data.clipboardContent !== undefined) {
-      return Promise.resolve(data.clipboardContent);
-    }
-
     console.log(1, 'reading from clipboard..');
     const pr = window.navigator.clipboard.readText().then((content) => {
       console.log(3, 'read:', content);
-      data.clipboardContent = content;
       return content;
     }).catch((err) => {
       console.log(4, 'error:', err);
@@ -52,7 +46,7 @@
 
   function attachEvents() {
     function $getInput() {
-      return document.querySelector('input[name="input"]');
+      return document.querySelector('[name="user-input"]');
     }
     function updateInput(value) {
       const $input = $getInput();
@@ -66,9 +60,13 @@
     (() => {
       const $summary = document.querySelector('summary[class="clipboard-summary"]');
       const $clipboardCode = document.querySelector('.clipboard-content');
+      if (!$summary) {
+        return;
+      }
       $summary.addEventListener('click', (ev) => {
         readFromClipboard().then((content) => {
-          updateInput($clipboardCode.textContent);
+          //updateInput(content);
+          $clipboardCode.textContent = content;
         })
       });
     })();

@@ -22,26 +22,36 @@
   <section class="input-section">
     <h4>Input</h4>
     <fieldset>
+      <!--
       <details class="clipboard-details">
         <summary class="clipboard-summary">클립보드</summary>
-        <div>
-          <button name="paste-input-from-clipboard">붙여넣기</button>
-        </div>
         <pre class="clipboard-content"></pre>
+        <div>
+        </div>
       </details>
-      <input type="text" name="input" value=""/>
+      -->
+      <div class="input-row">
+        <button name="paste-input-from-clipboard">클립보드</button>
+      </div>
+
+      <div class="input-row">
+        <label class="input-label" for="user-input">입력</label>
+        <textarea type="text" name="user-input" id="user-input"></textarea>
+      </div>
     </fieldset>
   </section>
 
   <section class="code-section">
-    <h4>Code</h4>
-    <fieldset class="code-fieldset">
-      <code class="code-prefix">(input) => </code>
-      <textarea name="code" class="code"></textarea>
-    </fieldset>
-    <div class="bottom-buttons">
-      <button name="compute">compute</button>
-    </div>
+    <details>
+      <summary>Code</summary>
+      <fieldset class="code-fieldset">
+        <code class="code-prefix">(input) => </code>
+        <textarea name="code" class="code"></textarea>
+      </fieldset>
+      <div class="bottom-buttons">
+        <button name="compute">compute</button>
+      </div>
+    </details>
   </section>
 
   <!--
@@ -50,8 +60,6 @@
     <pre class="state"></pre>
   </section>
   -->
-
-  <hr/>
 
   <section class="output-section">
     <h4>Output</h4>

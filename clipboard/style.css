@@ -21,6 +21,7 @@ fieldset + fieldset {
 }
 section {
   width: 100%;
+  margin-top: 1.333em;
 }
 details, summary {
   width: 100%;
@@ -39,6 +40,7 @@ code {
   border: 1px solid #ccc;
   border-radius: 2px;
   background-color: #eee;
+  white-space: pre-wrap;
 }
 
 input[type="text"] {
@@ -54,10 +56,6 @@ button {
 
 /*
  */
-main > hr {
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
 
 fieldset > code,
 fieldset > textarea,
@@ -67,10 +65,24 @@ fieldset > input {
   color: #333;
 }
 
+.input-row {
+  margin-top: 10px;
+}
 
 /*
  * input-section
  */
+
+.input-section details {
+  margin-bottom: 10px;
+}
+.input-section fieldset label {
+  display: inline-block;
+  width: 30px;
+}
+.input-section fieldset input {
+  width: calc(100% - 8px - 40px);
+}
 
 /*
  * code-section
@@ -103,7 +115,7 @@ fieldset.code-fieldset > textarea[name="code"] {
   overflow-x: hidden;
 }
 .output-fieldset textarea {
-  white-space: nowrap;
+  white-space: pre-wrap;
   overflow: auto;
 }
 .output-section a.output-anchor {
