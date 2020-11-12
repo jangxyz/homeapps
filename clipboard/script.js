@@ -2,9 +2,11 @@
 
   //
   const data = {
+    input: undefined,
+    code: undefined,
     clipboardContent: undefined,
+    options: {},
   };
-
 
   //
   function parseQuery(search) {
@@ -17,13 +19,17 @@
     const queryMap = parseQuery(window.location.search);
     const { input, code, output_anchor_text } = queryMap;
 
-    return {
-      input,
-      code,
+    if (input) {
+      data.input = input;
+    }
+    if (code) {
+      data.code = code;
+    }
+
+    data.options = {
       output_anchor_text,
     };
   }
-
 
   function readFromClipboard() {
     if (data.clipboardContent !== undefined) {
@@ -43,26 +49,55 @@
     return pr;
   }
 
+
   function attachEvents() {
-    //
+    function $getInput() {
+      return document.querySelector('input[name="input"]');
+    }
+    function updateInput(value) {
+      const $input = $getInput();
+      if ($input) {
+        $input.value = value;
+        data.input = value;
+      }
+    }
+
+    // click!summary: clipboard => .clipboard-content
     (() => {
       const $summary = document.querySelector('summary[class="clipboard-summary"]');
       const $clipboardCode = document.querySelector('.clipboard-content');
       $summary.addEventListener('click', (ev) => {
         readFromClipboard().then((content) => {
-          $clipboardCode.textContent = content;
+          updateInput($clipboardCode.textContent);
         })
+      });
+    })();
+
+    // click!paste: clipboard => $input
+    (() => {
+      const $pasteButton = document.querySelector('button[name="paste-input-from-clipboard"]');
+      $pasteButton.addEventListener('click', (ev) => {
+        readFromClipboard().then((content) => {
+          updateInput(content);
+        })
+      });
+    })();
+
+    // click!button[name="compute"]: compute output
+    (() => {
+      const $computeButton = document.querySelector('button[name="compute"]');
+      $computeButton.addEventListener('click', (ev) => {
+        if (data.input && data.code) {
+          computeOutput(data.input, data.code, data.options);
+        }
       });
     })();
 
     //
     (() => {
-      const $input = document.querySelector('input[name="input"]');
-      const $pasteButton = document.querySelector('button[name="paste-input-from-clipboard"]');
-      $pasteButton.addEventListener('click', (ev) => {
-        readFromClipboard().then((content) => {
-          $input.value = content;
-        })
+      const $input = $getInput();
+      $input.addEventListener('change', (ev) => {
+        data.input = $input.value;
       });
     })();
   }
@@ -84,8 +119,13 @@
     })
   }
 
-  function computeOutput({ code, input, output_anchor_text }) {
+  function computeOutput(input, code, { output_anchor_text }) {
     if (!input) {
+      console.log('no input:', input);
+      return;
+    }
+    if (!code) {
+      console.log('no code:', code);
       return;
     }
 
@@ -127,24 +167,26 @@
     attachEvents();
 
     //
-    const { input, code, output_anchor_text } = parseArgs();
+    parseArgs();
     //
     (() => {
       const $input = document.querySelector('input[name="input"]');
-      if ($input && input) {
-        $input.value = input;
+      if ($input && data.input) {
+        $input.value = data.input;
       }
     })();
 
     //
     (() => {
       const $code = document.querySelector('textarea[name="code"]');
-      if ($code && code) {
-        $code.value = code;
+      if ($code && data.code) {
+        $code.value = data.code;
       }
     })();
 
     // compute!
-    computeOutput({ input, code, output_anchor_text });
+    if (data.input && data.code) {
+      computeOutput(data.input, data.code, data.options);
+    }
   });
 })();
