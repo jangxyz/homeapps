@@ -3,3 +3,7 @@
 section h4 {
   /*display: none;*/
 }
+
+fieldset {
+  border: none;
+}

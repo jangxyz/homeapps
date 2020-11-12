@@ -32,15 +32,27 @@
 
   function readFromClipboard() {
     console.log(1, 'reading from clipboard..');
-    const pr = window.navigator.clipboard.readText().then((content) => {
-      console.log(3, 'read:', content);
-      return content;
-    }).catch((err) => {
-      console.log(4, 'error:', err);
-    });
-    console.log(2, 'waiting..');
+    //if (window.navigator.clipboard) {
+    //  const pr = window.navigator.clipboard.readText().then((content) => {
+    //    console.log(3, 'read:', content);
+    //    return content;
+    //  }).catch((err) => {
+    //    console.log(4, 'error:', err);
+    //  });
+    //  console.log(2, 'waiting..');
 
-    return pr;
+    //  return pr;
+    //}
+    // no async clipboard api
+
+    console.log(5);
+    const $textarea = document.createElement('textarea');
+    document.documentElement.appendChild($textarea);
+    $textarea.focus();
+    document.execCommand('paste');
+    console.log(6, $textarea.textContent);
+
+    return Promise.resolve($textarea.textContent);
   }
 
 
