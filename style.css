@@ -1,0 +1,64 @@
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+main {
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+fieldset {
+  width: calc(100% - 4px);
+  margin: 2px;
+  border: 2px groove threedface;
+  padding: 5px 12px 10px;
+  box-sizing: border-box;
+}
+fieldset + fieldset {
+  margin-top: -4px;
+}
+
+
+h4 {
+  margin-block-end: 5px;
+}
+
+input[type="text"] {
+  font-size: 10px;
+}
+textarea {
+  width: 100%;
+  font-size: 10px;
+}
+button {
+  height: 44px;
+}
+
+/*
+ */
+main > hr {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+fieldset > code,
+fieldset > textarea,
+fieldset > input {
+  width: calc(100% - 8px);
+  /*font-size: 80%;*/
+  color: #333;
+}
+
+[name="output-fieldset"] a.output-anchor {
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+[name="output-fieldset"] textarea {
+  white-space: nowrap;
+  overflow: auto;
+}
+

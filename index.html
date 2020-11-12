@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Using clipboard</title>
+  <!--<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height, target-densitydpi=device-dpi">-->
+  <meta name="viewport"
+        content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height">
+  <meta name="autocomplete" content="off">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="no">
+
+  <script src="script.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<!--<form>-->
+
+<main>
+  <h1>Code</h1>
+<h4>Input</h4>
+<fieldset>
+  <div>
+    <button name="paste-input-from-clipboard">paste from clipboard</button>
+  </div>
+  <input name="input" type="text" value="" />
+</fieldset>
+
+<h4>Code</h4>
+<fieldset name="">
+  <code>(input) => </code>
+  <textarea name="code" class="code"></textarea>
+</fieldset>
+<hr/>
+
+<h4>Output</h4>
+<fieldset name="output-fieldset">
+  <textarea name="output-textarea" wrap="soft"></textarea>
+  <a class="output-anchor" href="" target="_blank"></a>
+  <!--
+  <div>
+    <button name="copy-to-clipboard">Copy to clipboard</button>
+  </div>
+  -->
+</fieldset>
+<!--</form>-->
+</main>
+</body>
+</html>
