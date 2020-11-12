@@ -26,7 +26,7 @@
     }
 
     data.options = {
-      output_anchor_text,
+      outputAnchorText: output_anchor_text,
     };
   }
 
@@ -48,12 +48,18 @@
     function $getInput() {
       return document.querySelector('[name="user-input"]');
     }
+
     function updateInput(value) {
-      const $input = $getInput();
-      if ($input) {
-        $input.value = value;
-        data.input = value;
+      data.input = value;
+
+      // update ui
+      const $userInput = $getInput();
+      if ($userInput && $userInput.value !== value) {
+        $userInput.value = value;
       }
+
+      // side-effects
+      computeOutput();
     }
 
     // click!summary: clipboard => .clipboard-content
@@ -71,7 +77,7 @@
       });
     })();
 
-    // click!paste: clipboard => $input
+    // click!paste: clipboard => $userInput
     (() => {
       const $pasteButton = document.querySelector('button[name="paste-input-from-clipboard"]');
       $pasteButton.addEventListener('click', (ev) => {
@@ -86,16 +92,19 @@
       const $computeButton = document.querySelector('button[name="compute"]');
       $computeButton.addEventListener('click', (ev) => {
         if (data.input && data.code) {
-          computeOutput(data.input, data.code, data.options);
+          computeOutput();
         }
       });
     })();
 
     //
     (() => {
-      const $input = $getInput();
-      $input.addEventListener('change', (ev) => {
-        data.input = $input.value;
+      const $userInput = $getInput();
+      $userInput.addEventListener('change', (ev) => {
+        updateInput(ev.target.value);
+      });
+      $userInput.addEventListener('paste', (ev) => {
+        updateInput(ev.clipboardData.getData('text'));
       });
     })();
   }
@@ -117,7 +126,13 @@
     })
   }
 
-  function computeOutput(input, code, { output_anchor_text }) {
+  function computeOutput() {
+    const {
+      input = undefined,
+      code = undefined,
+      options: { outputAnchorText = undefined },
+    } = data || {};
+
     if (!input) {
       console.log('no input:', input);
       return;
@@ -133,6 +148,7 @@
       function buildFunction(body, input) {
         return new Function(`"use strict"; return (input) => ${body}`)();
       }
+
       const runner = buildFunction(code);
       console.log(runner);
 
@@ -141,10 +157,10 @@
 
       $outputTextarea.value = output;
       $outputAnchor.setAttribute('href', output);
-      if (output_anchor_text) {
-        $outputAnchor.textContent = output_anchor_text || '';
+      if (outputAnchorText) {
+        $outputAnchor.textContent = outputAnchorText || 'link';
       } else {
-        $outputAnchor.textContent = output || '';
+        $outputAnchor.textContent = output || 'link';
       }
     } catch (err) {
       console.error(err);
@@ -166,15 +182,16 @@
 
     //
     parseArgs();
-    //
+
+    // update ui: $userInput
     (() => {
-      const $input = document.querySelector('input[name="input"]');
-      if ($input && data.input) {
-        $input.value = data.input;
+      const $userInput = document.querySelector('input[name="input"]');
+      if ($userInput && data.input) {
+        $userInput.value = data.input;
       }
     })();
 
-    //
+    // update ui: $code
     (() => {
       const $code = document.querySelector('textarea[name="code"]');
       if ($code && data.code) {
@@ -184,7 +201,7 @@
 
     // compute!
     if (data.input && data.code) {
-      computeOutput(data.input, data.code, data.options);
+      computeOutput();
     }
   });
 })();
