@@ -6,6 +6,14 @@
   }
 
   function attachEvents() {
+    //
+    const $summary = document.querySelector('summary[name="clipboard-summary"]');
+    $summary.addEventListener('click', (ev) => {
+      window.navigator.clipboard.readText().then((content) => {
+        document.querySelector('.clipboard-content').textContent = content;
+      });
+    });
+    //
     const $input = document.querySelector('input[name="input"]');
     const $pasteButton = document.querySelector('button[name="paste-input-from-clipboard"]');
     $pasteButton.addEventListener('click', (ev) => {
@@ -15,15 +23,8 @@
     });
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const $input = document.querySelector('input[name="input"]');
-
-    const queryMap = parseQuery(window.location.search);
-    console.log(queryMap);
-    const { input, code } = queryMap;
-
-    //
-    navigator.permissions.query({
+  function queryPermission() {
+    return navigator.permissions.query({
       name: 'clipboard-read',
       allowWithoutGesture: true,
     }).then((permissionStatus) => {
@@ -35,7 +36,17 @@
         console.log(permissionStatus.state);
       };
     })
+  }
 
+  window.addEventListener('DOMContentLoaded', () => {
+    const $input = document.querySelector('input[name="input"]');
+
+    const queryMap = parseQuery(window.location.search);
+    console.log(queryMap);
+    const { input, code } = queryMap;
+
+    // print permission
+    //queryPermission();
 
     //
     if ($input && input) {

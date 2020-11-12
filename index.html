@@ -20,9 +20,13 @@
   <h1>Code</h1>
 <h4>Input</h4>
 <fieldset>
-  <div>
-    <button name="paste-input-from-clipboard">paste from clipboard</button>
-  </div>
+  <details name="clipboard-details">
+    <summary name="clipboard-summary">클립보드</summary>
+    <code class="clipboard-content"></code>
+    <div>
+      <button name="paste-input-from-clipboard">붙여넣기</button>
+    </div>
+  </details>
   <input name="input" type="text" value="" />
 </fieldset>
 
