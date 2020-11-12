@@ -18,36 +18,49 @@
 
 <main>
   <h1>Code</h1>
-<h4>Input</h4>
-<fieldset>
-  <details name="clipboard-details">
-    <summary name="clipboard-summary">클립보드</summary>
-    <code class="clipboard-content"></code>
-    <div>
-      <button name="paste-input-from-clipboard">붙여넣기</button>
-    </div>
-  </details>
-  <input name="input" type="text" value="" />
-</fieldset>
 
-<h4>Code</h4>
-<fieldset name="">
-  <code>(input) => </code>
-  <textarea name="code" class="code"></textarea>
-</fieldset>
-<hr/>
+  <section class="input-section">
+    <h4>Input</h4>
+    <fieldset>
+      <details class="clipboard-details">
+        <summary class="clipboard-summary">클립보드</summary>
+        <div>
+          <button name="paste-input-from-clipboard">붙여넣기</button>
+        </div>
+        <pre class="clipboard-content"></pre>
+      </details>
+      <input name="input" type="text" value=""/>
+    </fieldset>
+  </section>
 
-<h4>Output</h4>
-<fieldset name="output-fieldset">
-  <textarea name="output-textarea" wrap="soft"></textarea>
-  <a class="output-anchor" href="" target="_blank"></a>
-  <!--
-  <div>
-    <button name="copy-to-clipboard">Copy to clipboard</button>
-  </div>
-  -->
-</fieldset>
-<!--</form>-->
+  <section class="code-section">
+    <h4>Code</h4>
+    <fieldset class="code-fieldset">
+      <code class="code-prefix">(input) => </code>
+      <textarea name="code" class="code"></textarea>
+      <div class="bottom-buttons">
+        <button name="compute">compute</button>
+      </div>
+    </fieldset>
+  </section>
+  <hr/>
+
+  <section class="output-section">
+    <h4>Output</h4>
+    <fieldset class="output-fieldset">
+      <div class="status">
+
+      </div>
+      <textarea name="output-textarea" wrap="soft"></textarea>
+      <a class="output-anchor" href="" target="_blank"></a>
+      <!--
+      <div>
+        <button name="copy-to-clipboard">Copy to clipboard</button>
+      </div>
+      -->
+    </fieldset>
+    <!--</form>-->
+  </section>
 </main>
 </body>
 </html>
